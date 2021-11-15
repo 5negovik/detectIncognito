@@ -108,6 +108,11 @@ var detectIncognito = function(callback) {
 
   // >= 76
   function storageQuotaChromePrivateTest() {
+//     if ('storage' in navigator && 'estimate' in navigator.storage) {
+//       navigator.storage.estimate().then( (estimate) => callback(estimate.quota < getQuotaLimit()) );
+//       return;
+//     }
+    
     navigator.webkitTemporaryStorage.queryUsageAndQuota(
       function(usage, quota) {
         callback(quota < getQuotaLimit());
@@ -116,7 +121,6 @@ var detectIncognito = function(callback) {
         throw new Error("detectIncognito somehow failed to query storage quota: " + e.message);
       }
     );
-
   }
 
   // 50 to 75
